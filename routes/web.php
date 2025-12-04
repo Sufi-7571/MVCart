@@ -2,14 +2,21 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Vendor\VendorDashboardController;
 use App\Http\Controllers\Customer\CustomerDashboardController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
+
+
+// Public Routes
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
+
+
+
+// Protected Routes
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
