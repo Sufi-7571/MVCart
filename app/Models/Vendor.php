@@ -44,6 +44,11 @@ class Vendor extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
     // Helper methods
     public function isApproved()
     {
