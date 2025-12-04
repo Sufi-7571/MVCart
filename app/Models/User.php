@@ -21,7 +21,26 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'is_active',
     ];
+
+    // helper methods
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isVendor()
+    {
+        return $this->role === 'vendor';
+    }
+
+    public function isCustomer()
+    {
+        return $this->role === 'customer';
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -43,6 +62,13 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
+    }
+
+    // Relationships
+    public function vendor()
+    {
+        return $this->hasOne(Vendor::class);
     }
 }
