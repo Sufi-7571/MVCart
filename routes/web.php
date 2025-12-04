@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Vendor\VendorDashboardController;
+use App\Http\Controllers\Customer\CustomerDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,22 +21,22 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// Add these test routes
+// Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])
         ->name('dashboard');
 });
 
-Route::middleware(['auth', 'role:vendor'])->group(function () {
-    Route::get('/vendor/dashboard', function () {
-        return 'Vendor Dashboard';
-    })->name('vendor.dashboard');
+// Vendor Routes
+Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->name('vendor.')->group(function () {
+    Route::get('/dashboard', [VendorDashboardController::class, 'index'])
+        ->name('dashboard');
 });
 
-Route::middleware(['auth', 'role:customer'])->group(function () {
-    Route::get('/customer/dashboard', function () {
-        return 'Customer Dashboard';
-    })->name('customer.dashboard');
+// Customer Routes
+Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
+    Route::get('/dashboard', [CustomerDashboardController::class, 'index'])
+        ->name('dashboard');
 });
 
 require __DIR__ . '/auth.php';
